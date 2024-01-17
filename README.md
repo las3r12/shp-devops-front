@@ -3,6 +3,7 @@
 это репозиторий с frontend частью приложения random number
 
 ## Установка зависимостей
+
 ```shell
 npm install
 ```
