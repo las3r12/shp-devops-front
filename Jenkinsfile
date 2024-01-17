@@ -1,7 +1,7 @@
 pipeline{
     agent none
     environment {
-        PROJECT_DIR = '/var/www/ponomarenko_common_numbers'
+        PROJECT_DIR = '/var/www/ponomarenko_random_numbers'
     }
     stages{
         stage("deps") {
