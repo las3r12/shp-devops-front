@@ -28,12 +28,7 @@ pipeline{
             }
         }
         stage("deploy") {
-            agent {
-                docker{
-                    image 'node:latest'
-                    args '-u root'
-                }
-            }
+            agent any
             steps {
                 withCredentials(
                     [
