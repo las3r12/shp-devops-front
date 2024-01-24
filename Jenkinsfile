@@ -1,7 +1,7 @@
 pipeline{
     agent none
     environment {
-        PROJECT_DIR = '/var/www/ponomarenko_random_numbers'
+        PROJECT_DIR = '/var/www/ponomarenko_random_numbers/'
     }
     stages{
         stage("deps") {
@@ -28,7 +28,12 @@ pipeline{
             }
         }
         stage("deploy") {
-            agent any
+            agent {
+                docker{
+                    image 'node:latest'
+                    args '-u root'
+                }
+            }
             steps {
                 withCredentials(
                     [
