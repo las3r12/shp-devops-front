@@ -27,6 +27,25 @@ pipeline{
                 sh 'npm run build_prod'
             }
         }
+
+        stage("sonar qube"){
+            agent any
+            steps {
+                withCredentials([
+                    string(credentialsId: "sonarqube_url", variable: "SONARQUBE_URL"),
+                    usernamePassword(credentialsId: "sonar_numbers_front", usernameVariable: "PROJECT_KEY", passwordVariable: "PROJECT_TOKEN")
+                    ]){
+                    sh '''docker run \
+                        --rm \
+                        -e SONAR_HOST_URL="${SONARQUBE_URL}" \
+                        -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=${PROJECT_KEY} -Dsonar.python.coverage.reportPaths=coverage.xml" \
+                        -e SONAR_TOKEN="${PROJECT_TOKEN}" \
+                        -v "${WORKSPACE}:/usr/src" \
+                        sonarsource/sonar-scanner-cli
+                    '''
+                    }
+            }
+        }
         stage("deploy") {
             agent any
             steps {
